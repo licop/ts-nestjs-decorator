@@ -1,21 +1,32 @@
 // 为控制器属性注入对象的注入装饰器
-
 import "reflect-metadata";
-import collectionInstance from "../collection";
 
-type MyPropDecorator = (
-  targetClassPrototype: any,
-  propertyKey: string | symbol
-) => void;
 
-export default function Autowired(injectid: string): MyPropDecorator {
-  // targetClassPrototype为属性所属类的原型对象
+/**
+ * @param dependencyid  
+ * @param singleton - 判断是否是单件模式的对象 
+ * @returns 
+ */
+type MyPropDecorator = (targetClassPrototype: any, propertyKey: string | symbol) => void
+/**
+ * 
+ * @param dependencyid[injectid] 依赖id
+ * @param singleton -判断是否是单件模式的对象 
+ * @returns 
+ */
+export default function Autowired(dependencyid?: string, singleton?: boolean): MyPropDecorator {
   return (targetClassPrototype, propertyKey) => {
-    // design:type  获取类属性的数据类型 
-    let PropClass = Reflect.getMetadata("design:type", targetClassPrototype, propertyKey);
-    
-    //  增加....
-    let PropClassObj = new PropClass()
-    collectionInstance.set(propertyKey, PropClassObj)
-  };
+    let ServiceImplInstance: any
+    let ServiceImplInstanceOrClass = Reflect.getMetadata("ServiceImplInstanceOrClass", targetClassPrototype, propertyKey)
+    let metaSingleton = Reflect.getMetadata("singleton",
+      targetClassPrototype, propertyKey)
+    if (metaSingleton) {//如果是单件模式
+      console.log("我是Autowired装饰器,单件模式获取对象");
+      ServiceImplInstance = ServiceImplInstanceOrClass
+    } else {
+      ServiceImplInstance = new ServiceImplInstanceOrClass();
+    }
+    Reflect.defineProperty(targetClassPrototype, propertyKey,
+      { value: ServiceImplInstance })// 修改为 PropServiceImplClassObj
+  }
 }

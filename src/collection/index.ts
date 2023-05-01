@@ -18,4 +18,5 @@ class Collection<T = any> {
     return this.containerMap.has(id);
   }
 }
+
 export default Collection.collection;
