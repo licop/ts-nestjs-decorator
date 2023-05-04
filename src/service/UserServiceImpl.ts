@@ -1,5 +1,11 @@
+import UserDaoImpl from '../dao/UserDaoImpl';
+import { Userinfo } from '../entity/UserInfo';
+
+
 // 业务逻辑层
-export default class UserServiceImpl {
+export class UserServiceImpl {
+  userinfoDaoImpl: UserDaoImpl = new UserDaoImpl();
+
   static userServiceImpl: UserServiceImpl
   static getInstance() {
     if(!this.userServiceImpl) {
@@ -13,14 +19,11 @@ export default class UserServiceImpl {
     console.log("UserServiceImpl构造器....");
   }
 
-  Login(username: string, pwd: string, role: string) {
+  Login(username: string, pwd: string, role?: string): Userinfo {
     console.log("进入service ...Login,username:", username);
     
-    if (username === "admin" && pwd === "123" && role === "admin") {
-      return true;
-    } else {
-      return false;
-    }
+    return this.userinfoDaoImpl.findUsrByUsm(username, pwd) || null
+
   }
   register() {
     console.log("usersevice...register");

@@ -1,7 +1,7 @@
-import UserServiceImpl from './UserServiceImpl';
+import { UserServiceImpl } from './UserServiceImpl';
 
 // 伪接口
-export default class UserServiceInter {
+export class UserServiceInter {
   public static getServiceImplClass() {
     return UserServiceImpl
   }

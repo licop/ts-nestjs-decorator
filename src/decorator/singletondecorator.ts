@@ -1,7 +1,7 @@
 import 'reflect-metadata'
 type MyPropDecorator = (targetClassPrototype: any, propertyKey: string | symbol) => void
 
-export default function Singleton(isSingleton: boolean): MyPropDecorator {
+export function Singleton(isSingleton: boolean): MyPropDecorator {
   return (targetClassPrototype, propertyKey) => {
     let PropServiceClass: any = Reflect.getMetadata("design:type",
       targetClassPrototype, propertyKey)

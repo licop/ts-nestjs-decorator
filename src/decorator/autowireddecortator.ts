@@ -1,7 +1,6 @@
 // 为控制器属性注入对象的注入装饰器
 import "reflect-metadata";
 
-
 /**
  * @param dependencyid  
  * @param singleton - 判断是否是单件模式的对象 
@@ -14,7 +13,7 @@ type MyPropDecorator = (targetClassPrototype: any, propertyKey: string | symbol)
  * @param singleton -判断是否是单件模式的对象 
  * @returns 
  */
-export default function Autowired(dependencyid?: string, singleton?: boolean): MyPropDecorator {
+export function Autowired(dependencyid?: string, singleton?: boolean): MyPropDecorator {
   return (targetClassPrototype, propertyKey) => {
     let ServiceImplInstance: any
     let ServiceImplInstanceOrClass = Reflect.getMetadata("ServiceImplInstanceOrClass", targetClassPrototype, propertyKey)
