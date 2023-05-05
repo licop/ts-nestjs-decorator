@@ -28,7 +28,7 @@ let userinfosdb: Array<Userinfo> =
     password: "123",
     phone: "1111",
     role: "manager",
-    mark: "项目精力"
+    mark: "noallowlogin"
   },
   ]
 

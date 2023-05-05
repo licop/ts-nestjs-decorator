@@ -1,6 +1,7 @@
 // 控制器装饰器，负责处理来自客户端的http请求
 import { router } from '../util/router'
 import MethodType from '../util/methodtype';
+import { RequestHandler } from 'express';
 
 // 匿名函数泛型
 type MyClassDecorator = <T extends { new(...args: any): any }>(targetClass: T) => any
@@ -13,12 +14,19 @@ export function Controller(reqRootPath: string): MyClassDecorator {
       let routerpath = Reflect.getMetadata("path", targetClass.prototype, methodname)
       
       let methodType: MethodType = Reflect.getMetadata("methodType", targetClass.prototype, methodname)
-
+      // 获取中间件装饰器保存的中间件函数
+      let middleawares: Array<RequestHandler> = Reflect.getMetadata("middleawares", targetClass.prototype, methodname)
+      
       // 拿到装饰器对应的方法
-      const targetMethodfunc = targetClass.prototype[methodname];
+      const targetMethodfunc: RequestHandler = targetClass.prototype[methodname];
       // 当执行对应routerpath时，会自动执行targetMethodfunc方法
       if (routerpath && methodType) {
-        router[methodType](routerpath, targetMethodfunc);
+        if(middleawares) {
+          console.log(middleawares, 25)
+          router[methodType](routerpath, ...middleawares, targetMethodfunc);
+        } else {
+          router[methodType](routerpath, targetMethodfunc);
+        }
       }
     }
   }

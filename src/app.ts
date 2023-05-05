@@ -7,6 +7,7 @@ import session from 'express-session'
 // 这一执行直接导致router增加了路由完成，就是controlldecorators的添加路由代码的执行
 import './controller/UserController'
 import './controller/RightsController'
+import './controller/FoodController'
 
 // 然后在引入路由器
 import { router } from './util/router'

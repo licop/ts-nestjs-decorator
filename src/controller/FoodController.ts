@@ -2,11 +2,12 @@ import { Request, Response } from 'express'
 import {
   get, middleware, Controller
 } from '../decorator';
-import { isValidUser } from '../middleaware/middleawarefunc'
+import { isValidUser, SecondMiddleAware } from '../middleaware/middleawarefunc'
 
 @Controller("/")
 class FoodController {
   @get("/showFood")
+  @middleware(SecondMiddleAware)
   @middleware(isValidUser)
   showFood(req: Request, res: Response): void {
     res.setHeader("Content-Type", "text/html; charset=utf-8")
@@ -15,3 +16,4 @@ class FoodController {
     res.end();
   }
 }
+
