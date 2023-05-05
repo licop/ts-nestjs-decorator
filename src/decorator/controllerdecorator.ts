@@ -22,10 +22,10 @@ export function Controller(reqRootPath: string): MyClassDecorator {
       // 当执行对应routerpath时，会自动执行targetMethodfunc方法
       if (routerpath && methodType) {
         if(middleawares) {
-          console.log(middleawares, 25)
-          router[methodType](routerpath, ...middleawares, targetMethodfunc);
+          router[methodType](`${reqRootPath}${routerpath}`, ...middleawares, targetMethodfunc);
         } else {
-          router[methodType](routerpath, targetMethodfunc);
+          // router.get(`${reqRootPath}${routerpath}`, targetMethodfunc)
+          router[methodType](`${reqRootPath}${routerpath}`, targetMethodfunc);
         }
       }
     }

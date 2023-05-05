@@ -23,8 +23,8 @@ export class UserServiceImpl {
     console.log("进入service ...Login,username:", username);
     
     return this.userinfoDaoImpl.findUsrByUsm(username, pwd) || null
-
   }
+  
   register() {
     console.log("usersevice...register");
   }

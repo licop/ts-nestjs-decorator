@@ -28,7 +28,7 @@ class UserController {
   @get("/")
   index(req: Request, res: Response): void {
     if(getSession(req).userinfofrmdb) {
-      let htmlstr = `<div><a href='/showFood'
+      let htmlstr = `<div><a href='/showFood/rice/fandian'
        style='text-decoration:none;color:red'> 搜索美食历史信息 </a></div><div><a href = '/orderInfo'  style='text-decoration:none;color:red'> 订单信息 </a></div><div><a href="/loginout" style='text-decoration:none;color:red'>注销</a></div>`;
       
       res.send(htmlstr);
